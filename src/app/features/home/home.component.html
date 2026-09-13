@@ -1,0 +1,245 @@
+﻿<!-- Hero -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-content" appRevealAnimation>
+      <span class="section-tag">Lunettes non médicales stylées</span>
+      <h1 class="hero-title">Affirmez votre style avec <span class="text-merkey-orange">Merkey</span></h1>
+      <p class="hero-subtitle">
+        Des lunettes tendance, légères et accessibles, livrées partout en RDC. Trouvez le modèle qui vous ressemble.
+      </p>
+
+      <form class="hero-search" (ngSubmit)="onSearch()" role="search">
+        <i class="pi pi-search hero-search-icon"></i>
+        <input
+          type="search"
+          [(ngModel)]="searchInput"
+          name="home-search"
+          class="hero-search-input"
+          placeholder="Rechercher un modèle, une catégorie..."
+        >
+        <button type="submit" class="btn btn-orange">Rechercher</button>
+      </form>
+
+      <div class="hero-tags">
+        <span class="hero-tags-label">Populaire :</span>
+        <button *ngFor="let tag of popularTags" class="hero-tag" (click)="goToCategory(tag.category)">
+          {{ tag.label }}
+        </button>
+      </div>
+
+      <div class="hero-actions">
+        <a routerLink="/produits" class="btn btn-primary btn-lg">
+          <i class="pi pi-shopping-bag"></i> Découvrir la collection
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-image-frame" appRevealAnimation>
+        <img src="images/model-photo.png" alt="Portrait avec lunettes Merkey" class="hero-image">
+        <span class="hero-float-card hero-float-card--rating">
+          <i class="pi pi-star-fill"></i> 4.9/5 — plus de 1200 avis
+        </span>
+        <span class="hero-float-card hero-float-card--discount">
+          <i class="pi pi-tags"></i> Jusqu'à -28%
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust strip -->
+<section class="trust-strip">
+  <div class="container trust-strip-inner">
+    <div class="trust-strip-item">
+      <i class="pi pi-truck"></i>
+      <div>
+        <strong>Livraison rapide</strong>
+        <span>Partout en RDC</span>
+      </div>
+    </div>
+    <div class="trust-strip-item">
+      <i class="pi pi-wallet"></i>
+      <div>
+        <strong>Paiement à la livraison</strong>
+        <span>Ou via mobile money</span>
+      </div>
+    </div>
+    <div class="trust-strip-item">
+      <i class="pi pi-shield"></i>
+      <div>
+        <strong>Qualité garantie</strong>
+        <span>Produits testés et vérifiés</span>
+      </div>
+    </div>
+    <div class="trust-strip-item">
+      <i class="pi pi-headphones"></i>
+      <div>
+        <strong>Support WhatsApp</strong>
+        <span>Réponse en 24h</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="section categories">
+  <div class="container">
+    <span class="section-tag section-tag--center">Nos collections</span>
+    <h2 class="section-title section-title--center">Shop par catégorie</h2>
+
+    <div class="categories-grid">
+      <a
+        *ngFor="let cat of categories; let i = index"
+        class="category-card"
+        (click)="goToCategory(cat.value)"
+        appRevealAnimation
+        [appRevealAnimation]="(i * 0.08) + 's'"
+      >
+        <div class="category-image-wrap">
+          <img [src]="cat.image" [alt]="cat.label" class="category-image" loading="lazy">
+        </div>
+        <h3 class="category-title">{{ cat.label }}</h3>
+        <p class="category-description">{{ cat.description }}</p>
+        <span class="category-link">Découvrir <i class="pi pi-arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Deals -->
+<section class="section deals" *ngIf="deals().length">
+  <div class="container">
+    <div class="section-heading-row">
+      <div>
+        <span class="section-tag">Promotions</span>
+        <h2 class="section-title">Les bonnes affaires du moment</h2>
+      </div>
+      <a routerLink="/produits" class="btn btn-outline">Voir tout <i class="pi pi-arrow-right"></i></a>
+    </div>
+
+    <div class="deals-grid">
+      <app-product-card
+        *ngFor="let product of deals(); let i = index"
+        [product]="product"
+        appRevealAnimation
+        [appRevealAnimation]="(i * 0.1) + 's'"
+      ></app-product-card>
+    </div>
+  </div>
+</section>
+
+<!-- Best sellers -->
+<section class="section section--alt bestsellers">
+  <div class="container">
+    <div class="section-heading-row">
+      <div>
+        <span class="section-tag">Best-sellers</span>
+        <h2 class="section-title">Les plus vendus</h2>
+      </div>
+      <a routerLink="/produits" class="btn btn-outline">Voir toute la collection <i class="pi pi-arrow-right"></i></a>
+    </div>
+
+    <div class="bestsellers-grid">
+      <app-product-card
+        *ngFor="let product of bestSellers(); let i = index"
+        [product]="product"
+        appRevealAnimation
+        [appRevealAnimation]="(i * 0.08) + 's'"
+      ></app-product-card>
+    </div>
+  </div>
+</section>
+
+<!-- Promo banner -->
+<section class="promo-banner">
+  <div class="container promo-banner-inner">
+    <div class="promo-banner-text">
+      <span class="promo-banner-code">CODE : MERKEY10</span>
+      <h2 class="promo-banner-title">Bénéficiez de -10% sur votre première commande</h2>
+      <p class="promo-banner-sub">Utilisez le code aux caisses WhatsApp ou au moment de votre commande.</p>
+      <a routerLink="/produits" class="btn btn-light btn-lg"><i class="pi pi-tags"></i> J'en profite</a>
+    </div>
+    <div class="promo-banner-art">-10%</div>
+  </div>
+</section>
+
+<!-- New arrivals -->
+<section class="section newarrivals">
+  <div class="container">
+    <div class="section-heading-row">
+      <div>
+        <span class="section-tag">Nouveautés</span>
+        <h2 class="section-title">Les derniers arrivés</h2>
+      </div>
+      <a routerLink="/produits" class="btn btn-outline">Tout voir <i class="pi pi-arrow-right"></i></a>
+    </div>
+
+    <div class="newarrivals-grid">
+      <app-product-card
+        *ngFor="let product of newArrivals(); let i = index"
+        [product]="product"
+        appRevealAnimation
+        [appRevealAnimation]="(i * 0.08) + 's'"
+      ></app-product-card>
+    </div>
+  </div>
+</section>
+
+<!-- About teaser -->
+<section class="section about-teaser">
+  <div class="container about-teaser-inner">
+    <div class="about-teaser-image" appRevealAnimation>
+      <img src="images/team-photo.png" alt="L'équipe Merkey">
+    </div>
+    <div class="about-teaser-content" appRevealAnimation>
+      <span class="section-tag">À propos de Merkey</span>
+      <h2 class="section-title">Une marque née d'une passion pour le style</h2>
+      <p class="section-subtitle">
+        Merkey est née d'une conviction simple : tout le monde mérite d'avoir du style. Nos lunettes non médicales allient design, confort et accessibilité.
+      </p>
+      <a routerLink="/a-propos" class="btn btn-primary">En savoir plus <i class="pi pi-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section section--alt testimonials">
+  <div class="container">
+    <span class="section-tag section-tag--center">Ils nous font confiance</span>
+    <h2 class="section-title section-title--center">Ce que disent nos clients</h2>
+
+    <div class="testimonials-grid">
+      <figure class="testimonial-card" *ngFor="let t of testimonials; let i = index" appRevealAnimation [appRevealAnimation]="(i * 0.1) + 's'">
+        <div class="testimonial-stars">
+          <i class="pi pi-star-fill" *ngFor="let s of testimonialStars(t.rating)"></i>
+        </div>
+        <blockquote class="testimonial-content">« {{ t.content }} »</blockquote>
+        <figcaption class="testimonial-author">
+          <div class="testimonial-avatar"><i class="pi pi-user"></i></div>
+          <div>
+            <p class="testimonial-name">{{ t.name }}</p>
+            <p class="testimonial-role">{{ t.role }}</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="testimonials-note">
+      <i class="pi pi-star-fill"></i>
+      <span><strong>4.9 / 5</strong> — basé sur plus de 1200 avis clients vérifiés</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container cta-inner">
+    <div class="cta-badge"><i class="pi pi-star-fill"></i></div>
+    <h2 class="cta-title">Prêt à passer au niveau supérieur ?</h2>
+    <p class="cta-subtitle">Parcourez notre collection et trouvez la paire qui vous ressemble.</p>
+    <a routerLink="/produits" class="btn btn-orange btn-lg">
+      <i class="pi pi-shopping-bag"></i> Voir la boutique
+    </a>
+  </div>
+</section>

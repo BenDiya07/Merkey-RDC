@@ -1,0 +1,69 @@
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="section-tag">Notre histoire</span>
+    <h1 class="page-hero-title">L'élégance à la portée de tous</h1>
+    <p class="page-hero-subtitle">
+      Merkey, c'est une marque de lunettes non médicales qui allie style, qualité et accessibilité.
+    </p>
+  </div>
+</section>
+
+<section class="section story">
+  <div class="container story-grid">
+    <div class="story-image-wrap" appRevealAnimation>
+      <img src="images/team-photo.png" alt="L'équipe Merkey" class="story-image">
+    </div>
+    <div class="story-content" appRevealAnimation>
+      <span class="section-tag">Depuis nos débuts</span>
+      <h2 class="section-title">Une conviction simple : le style appartient à tous</h2>
+      <p class="section-subtitle story-paragraph">
+        Merkey est née d'un constat : les lunettes stylées sont souvent trop chères ou inaccessibles. Nous avons décidé de créer une marque qui casse ce mythe.
+      </p>
+      <p class="story-paragraph">
+        Nos modèles sont sélectionnés pour leur design, leur légèreté et leur confort. Du look rétro des montures rondes aux protections lumière bleue pour les écrans, chaque paire est pensée pour votre quotidien.
+      </p>
+      <p class="story-paragraph">
+        Notre promesse est simple : des lunettes qui vous ressemblent, à un prix juste, avec un service digne des plus grandes enseignes.
+      </p>
+      <a routerLink="/produits" class="btn btn-primary">
+        Découvrir nos lunettes <i class="pi pi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt values">
+  <div class="container">
+    <span class="section-tag section-tag--center">Nos valeurs</span>
+    <h2 class="section-title section-title--center">Ce qui nous anime</h2>
+
+    <div class="values-grid">
+      <div class="value-card" *ngFor="let value of values; let i = index" appRevealAnimation [appRevealAnimation]="(i * 0.1) + 's'">
+        <div class="value-icon"><i class="pi {{ value.icon }}"></i></div>
+        <h3 class="value-title">{{ value.title }}</h3>
+        <p class="value-description">{{ value.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of stats; let i = index" appRevealAnimation [appRevealAnimation]="(i * 0.08) + 's'">
+        <span class="stat-value">{{ stat.value }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta-inner">
+    <h2 class="cta-title">Rejoignez l'aventure Merkey</h2>
+    <p class="cta-subtitle">Trouvez la paire qui vous ressemble et laissez parler votre style.</p>
+    <a routerLink="/contact" class="btn btn-orange btn-lg">
+      <i class="pi pi-comments"></i> Parlons de votre projet
+    </a>
+  </div>
+</section>

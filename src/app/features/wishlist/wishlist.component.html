@@ -1,0 +1,30 @@
+<section class="page-hero page-hero--small">
+  <div class="container page-hero-inner">
+    <span class="section-tag">Mes favoris</span>
+    <h1 class="page-hero-title">
+      {{ wishlistService.count() }} modèle{{ wishlistService.count() > 1 ? 's' : '' }} en favoris
+    </h1>
+  </div>
+</section>
+
+<section class="section wishlist-section" *ngIf="products().length > 0">
+  <div class="container">
+    <div class="products-grid">
+      <app-product-card
+        *ngFor="let product of products(); let i = index"
+        [product]="product"
+        appRevealAnimation
+        [appRevealAnimation]="((i % 3) * 0.08) + 's'"
+      ></app-product-card>
+    </div>
+  </div>
+</section>
+
+<section class="empty-state" *ngIf="products().length === 0">
+  <div class="container empty-inner">
+    <i class="pi pi-heart empty-icon"></i>
+    <h2>Vous n'avez pas encore de favoris</h2>
+    <p>Cliquez sur le coeur n'importe quel produit pour le retrouver ici.</p>
+    <a routerLink="/produits" class="btn btn-primary btn-lg"><i class="pi pi-shopping-bag"></i> Parcourir la boutique</a>
+  </div>
+</section>

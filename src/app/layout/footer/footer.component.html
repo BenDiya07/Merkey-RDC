@@ -1,0 +1,85 @@
+<!-- Newsletter -->
+<section class="footer-newsletter">
+  <div class="container newsletter-inner">
+    <div class="newsletter-text">
+      <h3 class="newsletter-title">Restez dans la tendance</h3>
+      <p class="newsletter-sub">Recevez nos nouveautés, promos exclusives et réductions réservées aux abonnés.</p>
+    </div>
+    <form class="newsletter-form" (ngSubmit)="subscribe()" novalidate>
+      <input
+        type="email"
+        [(ngModel)]="newsletterEmail"
+        name="newsletter-email"
+        class="newsletter-input"
+        placeholder="Votre adresse email"
+        aria-label="Votre adresse email"
+      >
+      <button type="submit" class="btn btn-orange btn-sm">
+        <i class="pi pi-send"></i> S'abonner
+      </button>
+    </form>
+    <p class="newsletter-error" *ngIf="newsletterError">{{ newsletterError }}</p>
+    <p class="newsletter-success" *ngIf="newsletterSent"><i class="pi pi-check-circle"></i> Vous êtes abonné. À très vite !</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <img src="images/logo.webp" alt="Logo Merkey" class="footer-logo">
+        <span class="footer-brand-name">Merkey</span>
+      </div>
+      <p class="footer-tagline">
+        Des lunettes non médicales stylées, pensées pour tous. Style, confort et accessibilité au cœur de la RDC.
+      </p>
+      <div class="footer-socials">
+        <a
+          *ngFor="let social of socials"
+          [href]="social.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="social.label"
+          class="footer-social"
+        >
+          <i [class]="'pi ' + social.icon"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Navigation</h4>
+      <ul class="footer-links">
+        <li *ngFor="let link of quickLinks">
+          <a [routerLink]="link.path">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Catégories</h4>
+      <ul class="footer-links">
+        <li *ngFor="let cat of categories">
+          <a [routerLink]="'/produits'" [queryParams]="{ cat: cat.category }">{{ cat.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Contact</h4>
+      <ul class="footer-contact">
+        <li><i class="pi pi-map-marker"></i> Kinshasa, République Démocratique du Congo</li>
+        <li><i class="pi pi-phone"></i> +243 000 000 000</li>
+        <li><i class="pi pi-envelope"></i> contact&#64;merkeyrdc.com</li>
+        <li><i class="pi pi-whatsapp"></i> Commande via WhatsApp</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© {{ currentYear }} Merkey RDC. Tous droits réservés.</p>
+      <p class="footer-legal">Lunettes non médicales — Style &amp; tendance.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,115 @@
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="section-tag">Contact</span>
+    <h1 class="page-hero-title">Parlons de votre style</h1>
+    <p class="page-hero-subtitle">
+      Une question sur nos lunettes, une commande spéciale ou un simple bonjour ? Écrivez-nous.
+    </p>
+  </div>
+</section>
+
+<section class="section contact-section">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <h2 class="contact-info-title">Nos coordonnées</h2>
+      <p class="contact-info-text">Nous répondons généralement en moins de 24 heures.</p>
+
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="pi pi-map-marker"></i></div>
+        <div>
+          <h3 class="contact-card-title">Adresse</h3>
+          <p>Kinshasa, République Démocratique du Congo</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="pi pi-phone"></i></div>
+        <div>
+          <h3 class="contact-card-title">Téléphone</h3>
+          <p>+243 000 000 000</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="pi pi-envelope"></i></div>
+        <div>
+          <h3 class="contact-card-title">Email</h3>
+          <p>contact&#64;merkeyrdc.com</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="pi pi-clock"></i></div>
+        <div>
+          <h3 class="contact-card-title">Horaires</h3>
+          <p>Lundi – Samedi : 9h – 19h</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <h2 class="contact-form-title">Envoyez-nous un message</h2>
+
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label for="name" class="form-label">Nom complet *</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [class.form-control--invalid]="submitted && f['name'].invalid"
+            placeholder="Votre nom"
+          >
+          <span class="field-error" *ngIf="submitted && f['name'].invalid">Veuillez indiquer votre nom.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Adresse email *</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="form-control"
+            [class.form-control--invalid]="submitted && f['email'].invalid"
+            placeholder="vous&#64;exemple.com"
+          >
+          <span class="field-error" *ngIf="submitted && f['email'].invalid">Veuillez saisir une adresse email valide.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="subject" class="form-label">Sujet *</label>
+          <select
+            id="subject"
+            formControlName="subject"
+            class="form-control-select"
+            [class.form-control--invalid]="submitted && f['subject'].invalid"
+          >
+            <option value="" disabled selected>Choisissez un sujet</option>
+            <option value="commande">Passer une commande</option>
+            <option value="renseignement">Renseignement produit</option>
+            <option value="livraison">Livraison / Suivi</option>
+            <option value="autre">Autre demande</option>
+          </select>
+          <span class="field-error" *ngIf="submitted && f['subject'].invalid">Merci de sélectionner un sujet.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="message" class="form-label">Message *</label>
+          <textarea
+            id="message"
+            formControlName="message"
+            class="form-control"
+            [class.form-control--invalid]="submitted && f['message'].invalid"
+            placeholder="Décrivez votre demande..."
+          ></textarea>
+          <span class="field-error" *ngIf="submitted && f['message'].invalid">Votre message doit contenir au moins 10 caractères.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+          <i class="pi pi-send"></i> Envoyer le message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

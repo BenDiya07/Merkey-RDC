@@ -1,0 +1,114 @@
+<header class="site-header" [class.site-header--scrolled]="scrolled">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <p><i class="pi pi-truck"></i> Livraison rapide partout en RDC</p>
+      <p class="topbar-promo"><i class="pi pi-tags"></i> -10% avec le code <strong>MERKEY10</strong></p>
+      <p><i class="pi pi-whatsapp"></i> +243 000 000 000</p>
+    </div>
+  </div>
+
+  <!-- Main bar -->
+  <div class="container header-inner">
+    <a routerLink="/" class="brand" (click)="closeMenu()">
+      <img src="images/logo.webp" alt="Logo Merkey" class="brand-logo">
+      <span class="brand-name">Merkey</span>
+    </a>
+
+    <!-- Search -->
+    <form class="search-box" (ngSubmit)="onSearch()" role="search">
+      <i class="pi pi-search search-icon"></i>
+      <input
+        type="search"
+        [(ngModel)]="searchTerm"
+        name="search"
+        class="search-input"
+        placeholder="Rechercher un modèle, une catégorie..."
+        aria-label="Rechercher un produit"
+      >
+      <button type="submit" class="search-btn">Rechercher</button>
+    </form>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <a routerLink="/favoris" class="header-action" [routerLinkActive]="'active'" aria-label="Mes favoris">
+        <i class="pi pi-heart"></i>
+        <span class="action-badge" *ngIf="wishlistService.count() > 0">{{ wishlistService.count() }}</span>
+        <span class="action-label">Favoris</span>
+      </a>
+      <a routerLink="/panier" class="header-action" [routerLinkActive]="'active'" aria-label="Mon panier">
+        <i class="pi pi-shopping-cart"></i>
+        <span class="action-badge" *ngIf="cartService.itemsCount() > 0">{{ cartService.itemsCount() }}</span>
+        <span class="action-label">Panier</span>
+      </a>
+      <button class="menu-toggle" (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="mobileMenuOpen"
+        [attr.aria-label]="mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'">
+        <i class="pi" [ngClass]="mobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="Navigation principale">
+    <div class="container navbar-inner">
+      <div class="nav-links">
+        <a
+          *ngFor="let link of navLinks"
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: !!link.exact }"
+          class="nav-link"
+          (click)="closeMenu()"
+        >{{ link.label }}</a>
+
+        <div class="nav-dropdown" (mouseenter)="categoryDropdownOpen = true" (mouseleave)="categoryDropdownOpen = false">
+          <button class="nav-link nav-link--dropdown" (click)="toggleCategoryDropdown()">
+            Catégories <i class="pi pi-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu" *ngIf="categoryDropdownOpen">
+            <a *ngFor="let cat of categories" (click)="goToCategory(cat.category)" class="dropdown-link">
+              {{ cat.label }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <a routerLink="/produits" class="btn btn-orange btn-sm navbar-cta" (click)="closeMenu()">
+        <i class="pi pi-fire"></i> Promos
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-nav" [class.mobile-nav--open]="mobileMenuOpen">
+    <form class="mobile-search" (ngSubmit)="onSearch()">
+      <input type="search" [(ngModel)]="searchTerm" name="msearch" class="search-input" placeholder="Rechercher...">
+      <button type="submit" class="btn btn-primary btn-sm"><i class="pi pi-search"></i></button>
+    </form>
+
+    <a
+      *ngFor="let link of navLinks"
+      [routerLink]="link.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: !!link.exact }"
+      class="mobile-nav-link"
+      (click)="closeMenu()"
+    >{{ link.label }}</a>
+
+    <button class="mobile-nav-link mobile-nav-link--button" (click)="mobileSearchOpen = !mobileSearchOpen;">
+      Catégories <i class="pi pi-chevron-down"></i>
+    </button>
+    <div *ngIf="mobileSearchOpen" class="mobile-cats">
+      <a *ngFor="let cat of categories" class="mobile-cat-link" (click)="goToCategory(cat.category)">{{ cat.label }}</a>
+    </div>
+
+    <div class="mobile-actions">
+      <a routerLink="/favoris" class="btn btn-outline btn-sm" (click)="closeMenu()">
+        <i class="pi pi-heart"></i> Favoris ({{ wishlistService.count() }})
+      </a>
+      <a routerLink="/panier" class="btn btn-primary btn-sm" (click)="closeMenu()">
+        <i class="pi pi-shopping-cart"></i> Panier ({{ cartService.itemsCount() }})
+      </a>
+    </div>
+  </div>
+</header>

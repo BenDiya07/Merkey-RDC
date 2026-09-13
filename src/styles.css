@@ -1,1 +1,295 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   Merkey — Design System
+   Lunettes non médicales stylées
+   ============================================================ */
+
+/* Icons */
+@import 'primeicons/primeicons.css';
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ---------- Reset & base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1b1b1b;
+  background-color: #fbfaf7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ---------- Design tokens ---------- */
+:root {
+  --brand-green: #164e3b;
+  --brand-green-dark: #0e3a2b;
+  --brand-green-light: #e7f0ec;
+  --brand-orange: #cc8800;
+  --brand-orange-dark: #b37600;
+  --brand-orange-light: #fff4e0;
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1b1b1b;
+  --text-muted: #5f6a66;
+  --border: #e6e2da;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 2px 8px rgba(22, 78, 59, 0.08);
+  --shadow-md: 0 10px 30px rgba(22, 78, 59, 0.12);
+  --shadow-lg: 0 20px 50px rgba(22, 78, 59, 0.18);
+  --container-max: 1200px;
+  --transition: all 0.3s ease;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+main {
+  min-height: calc(100vh - 360px);
+}
+
+/* ---------- Section helpers ---------- */
+.section {
+  padding: 5rem 0;
+}
+
+.section--alt {
+  background-color: var(--surface);
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+  background: var(--brand-orange-light);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.section-title--center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 640px;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-subtitle--center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 560px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn .pi {
+  font-size: 0.9em;
+}
+
+.btn-primary {
+  background: var(--brand-green);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(22, 78, 59, 0.25);
+}
+
+.btn-primary:hover {
+  background: var(--brand-green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(22, 78, 59, 0.3);
+}
+
+.btn-orange {
+  background: var(--brand-orange);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(204, 136, 0, 0.25);
+}
+
+.btn-orange:hover {
+  background: var(--brand-orange-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 2px solid var(--brand-green);
+  color: var(--brand-green);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--brand-green);
+  color: #fff;
+}
+
+.btn-light {
+  background: #fff;
+  color: var(--brand-green);
+}
+
+.btn-light:hover {
+  background: var(--brand-green-light);
+  transform: translateY(-2px);
+}
+
+.btn-lg {
+  padding: 1rem 2.25rem;
+  font-size: 1.05rem;
+}
+
+.btn-sm {
+  padding: 0.55rem 1.25rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- Utilities ---------- */
+.bg-merkey-green { background-color: var(--brand-green) !important; }
+.text-merkey-green { color: var(--brand-green) !important; }
+.bg-merkey-orange { background-color: var(--brand-orange) !important; }
+.text-merkey-orange { color: var(--brand-orange) !important; }
+.text-muted { color: var(--text-muted) !important; }
+
+.transition-all { transition: var(--transition) !important; }
+.hover-shadow:hover { box-shadow: var(--shadow-md) !important; }
+
+/* ---------- Forms ---------- */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.form-control,
+.form-control-select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  appearance: none;
+}
+
+.form-control:focus,
+.form-control-select:focus {
+  outline: none;
+  border-color: var(--brand-green);
+  box-shadow: 0 0 0 3px rgba(22, 78, 59, 0.12);
+}
+
+textarea.form-control {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-control--invalid {
+  border-color: #d64545;
+}
+
+.form-control--invalid:focus {
+  box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.12);
+}
+
+.field-error {
+  display: block;
+  color: #d64545;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .section { padding: 3.5rem 0; }
+  .container { padding: 0 1.25rem; }
+}

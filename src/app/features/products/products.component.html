@@ -1,0 +1,63 @@
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="section-tag">La boutique</span>
+    <h1 class="page-hero-title">Nos lunettes stylées</h1>
+    <p class="page-hero-subtitle">
+      Des lunettes non médicales, tendance et accessibles. Trouvez le modèle qui vous ressemble.
+    </p>
+  </div>
+</section>
+
+<section class="section products-section">
+  <div class="container">
+    <!-- Search status -->
+    <div class="search-status" *ngIf="searchTerm()">
+      <p>
+        <strong>{{ products().length }}</strong> résultat{{ products().length > 1 ? 's' : '' }} pour
+        « <strong>{{ searchTerm() }}</strong> »
+      </p>
+      <button class="search-clear" (click)="clearSearch()">
+        <i class="pi pi-times"></i> Effacer
+      </button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="filter-bar" role="group" aria-label="Filtrer par catégorie">
+        <button
+          *ngFor="let cat of categories"
+          class="filter-chip"
+          [class.filter-chip--active]="selectedCategory() === cat.value"
+          (click)="selectCategory(cat.value)"
+        >{{ cat.label }}</button>
+      </div>
+
+      <div class="toolbar-right">
+        <span class="toolbar-count">{{ products().length }} modèle{{ products().length > 1 ? 's' : '' }}</span>
+        <label class="sort-label" for="sort">
+          Trier
+          <select id="sort" class="sort-select" [ngModel]="sort()" (ngModelChange)="sort.set($event); changeSort()">
+            <option *ngFor="let option of sortOptions" [ngValue]="option.value">{{ option.label }}</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="products-grid">
+      <app-product-card
+        *ngFor="let product of products(); let i = index"
+        [product]="product"
+        appRevealAnimation
+        [appRevealAnimation]="((i % 3) * 0.08) + 's'"
+      ></app-product-card>
+    </div>
+
+    <div class="products-empty" *ngIf="products().length === 0">
+      <i class="pi pi-search"></i>
+      <h3>Aucun modèle trouvé</h3>
+      <p>Essayez un autre mot-clé ou parcourez toutes les catégories.</p>
+      <button class="btn btn-primary" (click)="clearSearch()">Voir tous les modèles</button>
+    </div>
+  </div>
+</section>

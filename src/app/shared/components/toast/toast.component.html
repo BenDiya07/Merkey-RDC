@@ -1,0 +1,11 @@
+<div class="toast-container">
+  <div
+    class="toast"
+    *ngFor="let toast of toastService.toasts()"
+    (click)="toastService.dismiss(toast.id)"
+    role="status"
+  >
+    <i [class]="'pi ' + toast.icon"></i>
+    <span>{{ toast.text }}</span>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+<section class="page-hero page-hero--small">
+  <div class="container page-hero-inner">
+    <span class="section-tag">Mon panier</span>
+    <h1 class="page-hero-title">
+      {{ cartService.itemsCount() }} article{{ cartService.itemsCount() > 1 ? 's' : '' }} dans votre panier
+    </h1>
+  </div>
+</section>
+
+<section class="section cart-section" *ngIf="cartService.itemsCount() > 0">
+  <div class="container cart-layout">
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cartService.items()">
+        <a [routerLink]="['/produits', item.product.id]" class="cart-item-img">
+          <img [src]="item.product.image" [alt]="item.product.name" loading="lazy">
+        </a>
+        <div class="cart-item-info">
+          <a [routerLink]="['/produits', item.product.id]" class="cart-item-name">{{ item.product.name }}</a>
+          <span class="cart-item-price">{{ item.product.price.toFixed(2) }} $</span>
+          <span class="cart-item-old" *ngIf="item.product.oldPrice">Ancien prix : {{ item.product.oldPrice.toFixed(2) }} $</span>
+        </div>
+        <div class="cart-item-controls">
+          <div class="qty-stepper">
+            <button (click)="updateQuantity(item.product.id, item.quantity - 1)" aria-label="Diminuer">−</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="updateQuantity(item.product.id, item.quantity + 1)" [disabled]="item.quantity >= item.product.stock" aria-label="Augmenter">+</button>
+          </div>
+          <button class="cart-item-remove" (click)="removeItem(item.product.id, item.product.name)" aria-label="Supprimer">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+        <div class="cart-item-subtotal">
+          {{ (item.product.price * item.quantity).toFixed(2) }} $
+        </div>
+      </div>
+
+      <a routerLink="/produits" class="cart-continue">
+        <i class="pi pi-arrow-left"></i> Continuer vos achats
+      </a>
+    </div>
+
+    <!-- Summary -->
+    <aside class="cart-summary">
+      <h2 class="summary-title">Résumé de la commande</h2>
+
+      <div class="summary-line">
+        <span>Sous-total</span>
+        <span>{{ cartService.subtotal().toFixed(2) }} $</span>
+      </div>
+
+      <div class="summary-line summary-saving" *ngIf="cartService.saving() > 0">
+        <span>Économies</span>
+        <span class="saving-amount">-{{ cartService.saving().toFixed(2) }} $</span>
+      </div>
+
+      <!-- Promo -->
+      <div class="promo-box">
+        <div class="promo-applied" *ngIf="cartService.promo(); else promoInput">
+          <div class="promo-chip">
+            <i class="pi pi-ticket"></i>
+            <span>{{ cartService.promo()!.label }} (-{{ cartService.promo()!.percent }}%)</span>
+            <button class="promo-remove" (click)="removePromo()" aria-label="Retirer le code promo">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+        </div>
+        <ng-template #promoInput>
+          <div class="promo-input-row">
+            <input
+              type="text"
+              [(ngModel)]="promoCode"
+              class="promo-input"
+              placeholder="Code promo"
+              (keydown.enter)="applyPromo()"
+            >
+            <button class="btn btn-primary btn-sm" (click)="applyPromo()">Appliquer</button>
+          </div>
+          <p class="promo-error" *ngIf="promoError()">{{ promoError() }}</p>
+        </ng-template>
+      </div>
+
+      <div class="summary-line">
+        <span>Livraison</span>
+        <span *ngIf="cartService.shipping() > 0">{{ cartService.shipping().toFixed(2) }} $</span>
+        <span class="free-shipping" *ngIf="cartService.shipping() === 0">Offerte</span>
+      </div>
+
+      <div class="summary-discount" *ngIf="cartService.discount() > 0">
+        <span>Promo {{ cartService.promo()!.percent }}%</span>
+        <span>-{{ cartService.discount().toFixed(2) }} $</span>
+      </div>
+
+      <div class="summary-line summary-total">
+        <span>Total</span>
+        <span>{{ cartService.grandTotal().toFixed(2) }} $</span>
+      </div>
+
+      <button class="btn btn-primary btn-lg summary-btn" (click)="orderViaWhatsApp()">
+        <i class="pi pi-whatsapp"></i> Commander sur WhatsApp
+      </button>
+
+      <p class="summary-note"><i class="pi pi-lock"></i> Commande via WhatsApp — paiement à la livraison disponible.</p>
+
+      <div class="trust-badges">
+        <div class="trust-badge"><i class="pi pi-truck"></i><span>Livraison rapide</span></div>
+        <div class="trust-badge"><i class="pi pi-shield"></i><span>Qualité garantie</span></div>
+        <div class="trust-badge"><i class="pi pi-phone"></i><span>Suivi par WhatsApp</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="empty-state" *ngIf="cartService.itemsCount() === 0">
+  <div class="container empty-inner">
+    <i class="pi pi-shopping-cart empty-icon"></i>
+    <h2>Votre panier est vide</h2>
+    <p>Parcourez notre collection et trouvez les lunettes qui vous correspondent.</p>
+    <a routerLink="/produits" class="btn btn-primary btn-lg"><i class="pi pi-shopping-bag"></i> Voir la boutique</a>
+  </div>
+</section>

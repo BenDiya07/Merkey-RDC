@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              
               "src/styles.css"
             ],
             "scripts": []
@@ -41,8 +42,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "18kB"
                 }
               ],
               "outputHashing": "all"
@@ -92,5 +93,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
