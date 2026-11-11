@@ -21,8 +21,11 @@ export class WishlistComponent implements OnInit {
   products = signal<Product[]>([]);
 
   ngOnInit(): void {
-    this.productService.getAllProducts().subscribe((all) => {
-      this.products.set(all.filter((p) => this.wishlistService.isFavorite(p.id)));
+    this.productService.getAllProducts().subscribe({
+      next: (all) => {
+        this.products.set(all.filter((p) => this.wishlistService.isFavorite(p.id)));
+      },
+      error: () => this.products.set([])
     });
   }
 }

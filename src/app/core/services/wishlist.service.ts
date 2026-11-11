@@ -7,7 +7,7 @@ const STORAGE_KEY = 'merkey_wishlist';
   providedIn: 'root'
 })
 export class WishlistService {
-  private readonly idsSignal = signal<number[]>([]);
+  private readonly idsSignal = signal<string[]>([]);
 
   readonly ids = this.idsSignal.asReadonly();
   readonly count = computed(() => this.idsSignal().length);
@@ -28,7 +28,7 @@ export class WishlistService {
     });
   }
 
-  isFavorite(id: number): boolean {
+  isFavorite(id: string): boolean {
     return this.idsSignal().includes(id);
   }
 
@@ -41,7 +41,7 @@ export class WishlistService {
     return true;
   }
 
-  remove(id: number): void {
+  remove(id: string): void {
     this.idsSignal.set(this.idsSignal().filter((fid) => fid !== id));
   }
 }

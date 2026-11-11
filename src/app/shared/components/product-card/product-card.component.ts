@@ -40,10 +40,6 @@ export class ProductCardComponent {
     return oldPrice ? `${oldPrice.toFixed(2)} $` : '';
   }
 
-  get stars(): number[] {
-    return Array.from({ length: 5 }, (_, i) => i);
-  }
-
   isFavorite(): boolean {
     return this.wishlistService.isFavorite(this.product().id);
   }

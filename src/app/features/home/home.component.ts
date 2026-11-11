@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { SITE } from '../../core/config/site.config';
 import { CATEGORIES, Product, ProductCategory, Testimonial } from '../../core/models/product';
 import { ProductService } from '../../core/services/product.service';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
@@ -18,12 +19,15 @@ export class HomeComponent implements OnInit {
   private router = inject(Router);
   private productService = inject(ProductService);
 
+  readonly site = SITE;
+
   categories = CATEGORIES.filter((c) => c.value !== 'all');
 
   searchInput = '';
   deals = signal<Product[]>([]);
   bestSellers = signal<Product[]>([]);
   newArrivals = signal<Product[]>([]);
+  loadError = signal(false);
 
   popularTags: { label: string; category: ProductCategory }[] = [
     { label: 'Rondes', category: 'ronde' },
@@ -58,9 +62,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService.getDeals().subscribe((items) => this.deals.set(items.slice(0, 3)));
-    this.productService.getBestSellers(4).subscribe((items) => this.bestSellers.set(items));
-    this.productService.getNewArrivals().subscribe((items) => this.newArrivals.set(items.slice(0, 4)));
+    const onError = () => this.loadError.set(true);
+    this.productService.getDeals().subscribe({ next: (items) => this.deals.set(items.slice(0, 3)), error: onError });
+    this.productService.getBestSellers(4).subscribe({ next: (items) => this.bestSellers.set(items), error: onError });
+    this.productService.getNewArrivals().subscribe({ next: (items) => this.newArrivals.set(items.slice(0, 4)), error: onError });
   }
 
   onSearch(): void {

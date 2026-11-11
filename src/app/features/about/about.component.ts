@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SITE } from '../../core/config/site.config';
 import { RevealAnimationDirective } from '../../shared/directives/reveal-animation.directive';
 
 interface ValueCard {
@@ -17,6 +18,8 @@ interface ValueCard {
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
+  readonly site = SITE;
+
   values: ValueCard[] = [
     {
       icon: 'pi-heart',

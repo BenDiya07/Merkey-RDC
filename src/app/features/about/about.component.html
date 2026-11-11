@@ -47,7 +47,7 @@
   </div>
 </section>
 
-<section class="section stats">
+<section class="section stats" *ngIf="site.features.showStats">
   <div class="container">
     <div class="stats-grid">
       <div class="stat-card" *ngFor="let stat of stats; let i = index" appRevealAnimation [appRevealAnimation]="(i * 0.08) + 's'">

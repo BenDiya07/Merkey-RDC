@@ -37,7 +37,7 @@
     <div class="hero-visual">
       <div class="hero-image-frame" appRevealAnimation>
         <img src="images/model-photo.png" alt="Portrait avec lunettes Merkey" class="hero-image">
-        <span class="hero-float-card hero-float-card--rating">
+        <span class="hero-float-card hero-float-card--rating" *ngIf="site.features.showRatings">
           <i class="pi pi-star-fill"></i> 4.9/5 — plus de 1200 avis
         </span>
         <span class="hero-float-card hero-float-card--discount">
@@ -61,8 +61,8 @@
     <div class="trust-strip-item">
       <i class="pi pi-wallet"></i>
       <div>
-        <strong>Paiement à la livraison</strong>
-        <span>Ou via mobile money</span>
+        <strong>{{ site.commerce.paymentMethods[0] }}</strong>
+        <span>Commande simple et sécurisée</span>
       </div>
     </div>
     <div class="trust-strip-item">
@@ -134,8 +134,8 @@
   <div class="container">
     <div class="section-heading-row">
       <div>
-        <span class="section-tag">Best-sellers</span>
-        <h2 class="section-title">Les plus vendus</h2>
+        <span class="section-tag">Sélection</span>
+        <h2 class="section-title">Nos coups de cœur</h2>
       </div>
       <a routerLink="/produits" class="btn btn-outline">Voir toute la collection <i class="pi pi-arrow-right"></i></a>
     </div>
@@ -155,12 +155,12 @@
 <section class="promo-banner">
   <div class="container promo-banner-inner">
     <div class="promo-banner-text">
-      <span class="promo-banner-code">CODE : MERKEY10</span>
-      <h2 class="promo-banner-title">Bénéficiez de -10% sur votre première commande</h2>
+      <span class="promo-banner-code">CODE : {{ site.commerce.promo.code }}</span>
+      <h2 class="promo-banner-title">Bénéficiez de -{{ site.commerce.promo.percent }}% sur votre première commande</h2>
       <p class="promo-banner-sub">Utilisez le code aux caisses WhatsApp ou au moment de votre commande.</p>
       <a routerLink="/produits" class="btn btn-light btn-lg"><i class="pi pi-tags"></i> J'en profite</a>
     </div>
-    <div class="promo-banner-art">-10%</div>
+    <div class="promo-banner-art">-{{ site.commerce.promo.percent }}%</div>
   </div>
 </section>
 
@@ -204,7 +204,7 @@
 </section>
 
 <!-- Testimonials -->
-<section class="section section--alt testimonials">
+<section class="section section--alt testimonials" *ngIf="site.features.showTestimonials">
   <div class="container">
     <span class="section-tag section-tag--center">Ils nous font confiance</span>
     <h2 class="section-title section-title--center">Ce que disent nos clients</h2>

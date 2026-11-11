@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { SITE } from '../../core/config/site.config';
+import { NewsletterService } from '../../core/services/newsletter.service';
 import { ToastService } from '../../core/services/toast.service';
 
 @Component({
@@ -16,8 +18,12 @@ export class FooterComponent {
   newsletterEmail = '';
   newsletterError = '';
   newsletterSent = false;
+  newsletterSubmitting = false;
 
   private toastService = inject(ToastService);
+  private newsletterService = inject(NewsletterService);
+
+  readonly site = SITE;
 
   quickLinks = [
     { label: 'Accueil', path: '/' },
@@ -33,12 +39,7 @@ export class FooterComponent {
     { label: 'Photogrey', category: 'photogrey' }
   ];
 
-  socials = [
-    { label: 'Instagram', icon: 'pi-instagram', url: 'https://instagram.com' },
-    { label: 'Facebook', icon: 'pi-facebook', url: 'https://web.facebook.com/merkeyrdc' },
-    { label: 'WhatsApp', icon: 'pi-whatsapp', url: 'https://wa.me/243000000000' },
-    { label: 'TikTok', icon: 'pi-mobile', url: 'https://tiktok.com' }
-  ];
+  socials = SITE.socials;
 
   subscribe(): void {
     const email = this.newsletterEmail.trim();
@@ -47,12 +48,22 @@ export class FooterComponent {
       return;
     }
     this.newsletterError = '';
-    this.newsletterEmail = '';
-    this.newsletterSent = true;
-    this.toastService.show('Inscription confirmée. Merci !', 'pi-envelope');
-    setTimeout(() => {
-      this.newsletterSent = false;
-    }, 6000);
+    this.newsletterSubmitting = true;
+    this.newsletterService.subscribe(email).subscribe({
+      next: () => {
+        this.newsletterSubmitting = false;
+        this.newsletterEmail = '';
+        this.newsletterSent = true;
+        this.toastService.show('Inscription confirmée. Merci !', 'pi-envelope');
+        setTimeout(() => {
+          this.newsletterSent = false;
+        }, 6000);
+      },
+      error: () => {
+        this.newsletterSubmitting = false;
+        this.newsletterError = 'Une erreur est survenue. Merci de réessayer.';
+      }
+    });
   }
 
   goToCategory(category: string): void {

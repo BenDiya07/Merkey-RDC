@@ -1,9 +1,9 @@
 export type ProductCategory = 'ronde' | 'jft' | 'lumierebleue' | 'photogrey';
 
-export type ProductSort = 'relevance' | 'price-asc' | 'price-desc' | 'rating' | 'sold';
+export type ProductSort = 'relevance' | 'price-asc' | 'price-desc' | 'newest';
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
   oldPrice?: number;
@@ -14,9 +14,6 @@ export interface Product {
   description: string;
   features: string[];
   category: ProductCategory;
-  rating: number;
-  reviewsCount: number;
-  sold: number;
   stock: number;
   isNew?: boolean;
   featured?: boolean;

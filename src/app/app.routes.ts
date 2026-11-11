@@ -6,6 +6,7 @@ import { CartComponent } from './features/cart/cart.component';
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 import { AboutComponent } from './features/about/about.component';
 import { ContactComponent } from './features/contact/contact.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', title: 'Merkey — Lunettes non médicales stylées', component: HomeComponent },
@@ -15,5 +16,5 @@ export const routes: Routes = [
   { path: 'favoris', title: 'Mes favoris | Merkey', component: WishlistComponent },
   { path: 'a-propos', title: 'À propos | Merkey', component: AboutComponent },
   { path: 'contact', title: 'Contact | Merkey', component: ContactComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', title: 'Page introuvable | Merkey', component: NotFoundComponent }
 ];

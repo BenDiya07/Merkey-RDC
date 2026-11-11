@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { SITE } from '../../core/config/site.config';
 import { Product } from '../../core/models/product';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
@@ -28,6 +29,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   product = signal<Product | null>(null);
   related = signal<Product[]>([]);
   notFound = signal(false);
+  loadError = signal(false);
+
+  readonly site = SITE;
 
   selectedImage = signal('');
   quantity = 1;
@@ -44,7 +48,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      const id = Number(params.get('id'));
+      const id = params.get('id') ?? '';
       this.loadProduct(id);
     });
   }
@@ -54,19 +58,25 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private loadProduct(id: number): void {
-    this.productService.getProductById(id).pipe(takeUntil(this.destroy$)).subscribe((product) => {
-      if (!product) {
-        this.notFound.set(true);
-        return;
+  private loadProduct(id: string): void {
+    this.productService.getProductById(id).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (product) => {
+        if (!product) {
+          this.notFound.set(true);
+          return;
+        }
+        this.notFound.set(false);
+        this.loadError.set(false);
+        this.product.set(product);
+        this.quantity = 1;
+        this.selectedImage.set(product.image);
+        this.productService.getRelated(product).pipe(takeUntil(this.destroy$)).subscribe((rel) => {
+          this.related.set(rel);
+        });
+      },
+      error: () => {
+        this.loadError.set(true);
       }
-      this.notFound.set(false);
-      this.product.set(product);
-      this.quantity = 1;
-      this.selectedImage.set(product.image);
-      this.productService.getRelated(product).pipe(takeUntil(this.destroy$)).subscribe((rel) => {
-        this.related.set(rel);
-      });
     });
   }
 
@@ -83,11 +93,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
     return list;
   }
-
-  get stars(): number[] {
-    return Array.from({ length: 5 }, (_, i) => i);
-  }
-
   isFavorite(): boolean {
     const product = this.product();
     return product ? this.wishlistService.isFavorite(product.id) : false;

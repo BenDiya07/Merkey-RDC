@@ -43,8 +43,22 @@
       </div>
     </div>
 
+    <!-- Loading -->
+    <div class="products-loading" *ngIf="loading()">
+      <i class="pi pi-spin pi-spinner"></i>
+      <p>Chargement des modèles…</p>
+    </div>
+
+    <!-- Error -->
+    <div class="products-empty" *ngIf="!loading() && loadError()">
+      <i class="pi pi-exclamation-triangle"></i>
+      <h3>Impossible de charger la boutique</h3>
+      <p>Vérifiez votre connexion et réessayez.</p>
+      <button class="btn btn-primary" (click)="changeSort()">Réessayer</button>
+    </div>
+
     <!-- Grid -->
-    <div class="products-grid">
+    <div class="products-grid" *ngIf="!loading() && !loadError()">
       <app-product-card
         *ngFor="let product of products(); let i = index"
         [product]="product"
@@ -53,7 +67,7 @@
       ></app-product-card>
     </div>
 
-    <div class="products-empty" *ngIf="products().length === 0">
+    <div class="products-empty" *ngIf="!loading() && !loadError() && products().length === 0">
       <i class="pi pi-search"></i>
       <h3>Aucun modèle trouvé</h3>
       <p>Essayez un autre mot-clé ou parcourez toutes les catégories.</p>

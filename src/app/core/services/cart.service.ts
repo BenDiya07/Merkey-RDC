@@ -1,4 +1,5 @@
 import { computed, effect, Injectable, signal } from '@angular/core';
+import { SITE } from '../config/site.config';
 import { CartItem, Product } from '../models/product';
 
 interface PromoCode {
@@ -8,8 +9,7 @@ interface PromoCode {
 }
 
 const PROMO_CODES: PromoCode[] = [
-  { code: 'MERKEY10', percent: 10, label: 'Bienvenue -10%' },
-  { code: 'MERKEY20', percent: 20, label: 'Promo -20%' }
+  { code: SITE.commerce.promo.code, percent: SITE.commerce.promo.percent, label: SITE.commerce.promo.label }
 ];
 
 const STORAGE_KEY = 'merkey_cart';
@@ -48,7 +48,11 @@ export class CartService {
 
   readonly total = computed(() => Math.max(0, this.subtotal() - this.discount()));
 
-  readonly shipping = computed(() => (this.subtotal() >= 50 || this.subtotal() === 0 ? 0 : 3.5));
+  readonly shipping = computed(() =>
+    this.subtotal() >= SITE.commerce.freeShippingThreshold || this.subtotal() === 0
+      ? 0
+      : SITE.commerce.flatShippingFee
+  );
 
   readonly grandTotal = computed(() => this.total() + this.shipping());
 
@@ -79,7 +83,7 @@ export class CartService {
     }
   }
 
-  updateQuantity(productId: number, quantity: number): void {
+  updateQuantity(productId: string, quantity: number): void {
     if (quantity <= 0) {
       this.remove(productId);
       return;
@@ -91,7 +95,7 @@ export class CartService {
     );
   }
 
-  remove(productId: number): void {
+  remove(productId: string): void {
     this.itemsSignal.set(this.itemsSignal().filter((item) => item.product.id !== productId));
   }
 
