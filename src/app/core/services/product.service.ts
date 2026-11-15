@@ -21,7 +21,7 @@ interface ProductRow {
 
 const SELECT = 'id,name,price,compare_at_price,description,image_url,gallery,features,stock,is_new,is_featured,categories(slug,name)';
 
-const KNOWN_SLUGS: ProductCategory[] = ['ronde', 'jft', 'lumierebleue', 'photogrey'];
+const KNOWN_SLUGS: ProductCategory[] = ['lumierebleue', 'photogrey', 'soleil', 'accessoires'];
 const FALLBACK_IMAGE = '/placeholder.jpg';
 
 @Injectable({
@@ -200,9 +200,10 @@ export class ProductService {
     }
 
     const normalizedName = (name ?? '').trim().toLowerCase();
-    if (normalizedName.includes('jft')) return 'jft';
     if (normalizedName.includes('bleu') || normalizedName.includes('blue')) return 'lumierebleue';
     if (normalizedName.includes('photo')) return 'photogrey';
-    return 'ronde';
+    if (normalizedName.includes('soleil') || normalizedName.includes('sun')) return 'soleil';
+    if (normalizedName.includes('accessoire') || normalizedName.includes('étui') || normalizedName.includes('etui')) return 'accessoires';
+    return 'lumierebleue';
   }
 }

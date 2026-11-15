@@ -21,10 +21,10 @@ export class ProductCardComponent {
   private toastService = inject(ToastService);
 
   categoryLabels: Record<Product['category'], string> = {
-    ronde: 'Rondes',
-    jft: 'JFT',
     lumierebleue: 'Lumière bleue',
-    photogrey: 'Photogrey'
+    photogrey: 'Photogrey',
+    soleil: 'Lunettes de soleil',
+    accessoires: 'Accessoires'
   };
 
   get categoryLabel(): string {

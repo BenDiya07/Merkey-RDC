@@ -38,10 +38,10 @@ export class HeaderComponent {
     { label: 'Contact', path: '/contact' }
   ];
 
-  categories = [{ label: 'Rondes', path: '/produits', category: 'ronde' },
-    { label: 'JFT', path: '/produits', category: 'jft' },
-    { label: 'Lumière bleue', path: '/produits', category: 'lumierebleue' },
-    { label: 'Photogrey', path: '/produits', category: 'photogrey' }];
+  categories = [{ label: 'Lumière bleue', path: '/produits', category: 'lumierebleue' },
+    { label: 'Photogrey', path: '/produits', category: 'photogrey' },
+    { label: 'Lunettes de soleil', path: '/produits', category: 'soleil' },
+    { label: 'Accessoires', path: '/produits', category: 'accessoires' }];
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {

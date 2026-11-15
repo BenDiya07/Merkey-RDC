@@ -40,10 +40,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   categoryLabels: Record<Product['category'], string> = {
-    ronde: 'Rondes',
-    jft: 'JFT',
     lumierebleue: 'Lumière bleue',
-    photogrey: 'Photogrey'
+    photogrey: 'Photogrey',
+    soleil: 'Lunettes de soleil',
+    accessoires: 'Accessoires'
   };
 
   ngOnInit(): void {

@@ -30,10 +30,10 @@ export class HomeComponent implements OnInit {
   loadError = signal(false);
 
   popularTags: { label: string; category: ProductCategory }[] = [
-    { label: 'Rondes', category: 'ronde' },
-    { label: 'JFT', category: 'jft' },
     { label: 'Lumière bleue', category: 'lumierebleue' },
-    { label: 'Photogrey', category: 'photogrey' }
+    { label: 'Photogrey', category: 'photogrey' },
+    { label: 'Lunettes de soleil', category: 'soleil' },
+    { label: 'Accessoires', category: 'accessoires' }
   ];
 
   testimonials: Testimonial[] = [

@@ -33,10 +33,10 @@ export class FooterComponent {
   ];
 
   categories = [
-    { label: 'Rondes', category: 'ronde' },
-    { label: 'JFT', category: 'jft' },
     { label: 'Lumière bleue', category: 'lumierebleue' },
-    { label: 'Photogrey', category: 'photogrey' }
+    { label: 'Photogrey', category: 'photogrey' },
+    { label: 'Lunettes de soleil', category: 'soleil' },
+    { label: 'Accessoires', category: 'accessoires' }
   ];
 
   socials = SITE.socials;

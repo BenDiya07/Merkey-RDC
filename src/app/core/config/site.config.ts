@@ -10,8 +10,8 @@ export interface SocialLink {
  * (Eventually this can be served from Supabase without touching components.)
  */
 
-// TODO: replace with the real WhatsApp number, digits only, international format.
-export const WHATSAPP_E164 = '243000000000';
+// Real WhatsApp number, digits only, international format (+243 828 498 126).
+export const WHATSAPP_E164 = '243828498126';
 
 export function whatsappLink(text?: string): string {
   const base = `https://wa.me/${WHATSAPP_E164}`;
@@ -22,19 +22,16 @@ export const SITE = {
   brand: 'Merkey',
   contact: {
     whatsappE164: WHATSAPP_E164,
-    // TODO: display format of the real number
-    phoneDisplay: '+243 000 000 000',
-    email: 'contact@merkeyrdc.com',
+    phoneDisplay: '+243 828 498 126',
+    email: 'merkeyrdc@gmail.com',
     city: 'Kinshasa',
     country: 'République Démocratique du Congo',
     address: 'Kinshasa, République Démocratique du Congo',
-    hours: 'Lundi – Samedi : 9h – 19h'
+    hours: 'Toujours ouvert — 24h/24, 7j/7'
   },
   socials: [
-    { label: 'Instagram', icon: 'pi-instagram', url: 'https://instagram.com' },
     { label: 'Facebook', icon: 'pi-facebook', url: 'https://web.facebook.com/merkeyrdc' },
-    { label: 'WhatsApp', icon: 'pi-whatsapp', url: `https://wa.me/${WHATSAPP_E164}` },
-    { label: 'TikTok', icon: 'pi-mobile', url: 'https://tiktok.com' }
+    { label: 'WhatsApp', icon: 'pi-whatsapp', url: `https://wa.me/${WHATSAPP_E164}` }
   ] as SocialLink[],
   commerce: {
     currency: '$',
