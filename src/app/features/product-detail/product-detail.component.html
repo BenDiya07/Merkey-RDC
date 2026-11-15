@@ -34,15 +34,6 @@
         <span class="product-category">{{ categoryLabels[product()!.category] }}</span>
         <h1 class="detail-title">{{ product()!.name }}</h1>
 
-        <div class="detail-rating">
-          <span class="stars">
-            <i class="pi pi-star-fill" *ngFor="let s of stars" [class.star-off]="s >= product()!.rating"></i>
-          </span>
-          <span class="rating-text">{{ product()!.rating }} ({{ product()!.reviewsCount }} avis)</span>
-          <span class="rating-sep">•</span>
-          <span class="rating-text">{{ product()!.sold }} vendus</span>
-        </div>
-
         <div class="detail-price">
           <span class="price-now">{{ product()!.price.toFixed(2) }} $</span>
           <span class="price-old" *ngIf="product()!.oldPrice">{{ product()!.oldPrice!.toFixed(2) }} $</span>
@@ -102,7 +93,7 @@
         <div *ngIf="activeTab === 'shipping'">
           <p><i class="pi pi-check-circle"></i> Livraison disponible partout en RDC.</p>
           <p><i class="pi pi-check-circle"></i> Délai de livraison : 24h à 72h selon la région.</p>
-          <p><i class="pi pi-check-circle"></i> Paiement à la livraison ou via mobile money.</p>
+          <p><i class="pi pi-check-circle"></i> Paiement : {{ site.commerce.paymentMethods.join(', ') }}.</p>
         </div>
       </div>
     </div>
@@ -119,6 +110,15 @@
         ></app-product-card>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="not-found" *ngIf="loadError()">
+  <div class="container not-found-inner">
+    <i class="pi pi-exclamation-triangle"></i>
+    <h1>Impossible de charger le produit</h1>
+    <p>Vérifiez votre connexion et réessayez.</p>
+    <a routerLink="/produits" class="btn btn-primary btn-lg">Retour à la boutique</a>
   </div>
 </section>
 

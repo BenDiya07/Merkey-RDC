@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { SITE, whatsappLink } from '../../core/config/site.config';
 import { CartService } from '../../core/services/cart.service';
 import { ToastService } from '../../core/services/toast.service';
 
@@ -16,6 +17,8 @@ export class CartComponent {
   readonly cartService = inject(CartService);
   private toastService = inject(ToastService);
 
+  readonly site = SITE;
+
   promoCode = '';
   promoError = signal('');
 
@@ -24,11 +27,11 @@ export class CartComponent {
     return promotions;
   }
 
-  updateQuantity(productId: number, quantity: number): void {
+  updateQuantity(productId: string, quantity: number): void {
     this.cartService.updateQuantity(productId, quantity);
   }
 
-  removeItem(productId: number, name: string): void {
+  removeItem(productId: string, name: string): void {
     this.cartService.remove(productId);
     this.toastService.show(`${name} retiré du panier`, 'pi-trash');
   }
@@ -41,7 +44,7 @@ export class CartComponent {
       this.toastService.show(`Code ${this.promoCode.trim().toUpperCase()} appliqué !`, 'pi-ticket');
       this.promoCode = '';
     } else {
-      this.promoError.set('Code promo invalide. Essayez MERKEY10.');
+      this.promoError.set(`Code promo invalide. Essayez ${SITE.commerce.promo.code}.`);
     }
   }
 
@@ -68,6 +71,6 @@ export class CartComponent {
         : 'Livraison offerte 🎉\n') +
       `Total : ${this.cartService.grandTotal().toFixed(2)} $`;
 
-    window.open(`https://wa.me/243000000000?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(whatsappLink(message), '_blank');
   }
 }

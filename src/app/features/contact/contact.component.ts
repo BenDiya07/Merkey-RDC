@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SITE, whatsappLink } from '../../core/config/site.config';
 
 @Component({
   selector: 'app-contact',
@@ -12,6 +13,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class ContactComponent {
   contactForm: FormGroup;
   submitted = false;
+  readonly site = SITE;
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
@@ -35,7 +37,7 @@ export class ContactComponent {
 
     const { message, email } = this.contactForm.value;
     const text = `Bonjour Merkey,\n\nNom : ${this.contactForm.value.name}\nEmail : ${email}\n\n${message}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(whatsappLink(text), '_blank');
 
     this.contactForm.reset();
     this.submitted = false;

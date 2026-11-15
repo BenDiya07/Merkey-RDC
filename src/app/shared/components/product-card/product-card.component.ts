@@ -21,10 +21,10 @@ export class ProductCardComponent {
   private toastService = inject(ToastService);
 
   categoryLabels: Record<Product['category'], string> = {
-    ronde: 'Rondes',
-    jft: 'JFT',
     lumierebleue: 'Lumière bleue',
-    photogrey: 'Photogrey'
+    photogrey: 'Photogrey',
+    soleil: 'Lunettes de soleil',
+    accessoires: 'Accessoires'
   };
 
   get categoryLabel(): string {
@@ -38,10 +38,6 @@ export class ProductCardComponent {
   get formattedOldPrice(): string {
     const oldPrice = this.product().oldPrice;
     return oldPrice ? `${oldPrice.toFixed(2)} $` : '';
-  }
-
-  get stars(): number[] {
-    return Array.from({ length: 5 }, (_, i) => i);
   }
 
   isFavorite(): boolean {
