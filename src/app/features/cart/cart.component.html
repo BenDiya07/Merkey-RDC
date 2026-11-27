@@ -1,4 +1,4 @@
-<section class="page-hero page-hero--small">
+<section class="page-hero page-hero--small" *ngIf="!lastOrder()">
   <div class="container page-hero-inner">
     <span class="section-tag">Mon panier</span>
     <h1 class="page-hero-title">
@@ -95,11 +95,70 @@
         <span>{{ cartService.grandTotal().toFixed(2) }} $</span>
       </div>
 
-      <button class="btn btn-primary btn-lg summary-btn" (click)="orderViaWhatsApp()">
+      <div class="checkout-form">
+        <h3 class="summary-title" style="font-size: 1.05rem; margin-bottom: 1rem;">Vos informations</h3>
+
+        <div class="form-group">
+          <label class="form-label" for="order-name">Nom complet *</label>
+          <input
+            id="order-name"
+            class="form-control"
+            type="text"
+            [(ngModel)]="customerName"
+            placeholder="Ex. Clarisse Mbuyi"
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="order-phone">Téléphone *</label>
+          <input
+            id="order-phone"
+            class="form-control"
+            type="tel"
+            [(ngModel)]="customerPhone"
+            placeholder="+243 ..."
+            autocomplete="tel"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="order-city">Ville</label>
+          <input
+            id="order-city"
+            class="form-control"
+            type="text"
+            [(ngModel)]="customerCity"
+            placeholder="Kinshasa"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="order-note">Note (optionnel)</label>
+          <textarea
+            id="order-note"
+            class="form-control"
+            style="min-height: 70px;"
+            [(ngModel)]="note"
+            placeholder="Instructions de livraison..."
+          ></textarea>
+        </div>
+
+        <p class="field-error" *ngIf="orderError()">{{ orderError() }}</p>
+
+        <button class="btn btn-primary btn-lg summary-btn" (click)="placeOrder()" [disabled]="submitting()">
+          <i class="pi" [ngClass]="submitting() ? 'pi-spin pi-spinner' : 'pi-shopping-bag'"></i>
+          {{ submitting() ? 'Envoi en cours...' : 'Commander en ligne (paiement à la livraison)' }}
+        </button>
+      </div>
+
+      <div class="summary-divider"><span>ou</span></div>
+
+      <button class="btn btn-outline btn-lg summary-btn" (click)="orderViaWhatsApp()">
         <i class="pi pi-whatsapp"></i> Commander sur WhatsApp
       </button>
 
-      <p class="summary-note"><i class="pi pi-lock"></i> Commande via WhatsApp — paiement à la livraison disponible.</p>
+      <p class="summary-note"><i class="pi pi-lock"></i> Paiement à la livraison — confirmation par téléphone.</p>
 
       <div class="trust-badges">
         <div class="trust-badge"><i class="pi pi-truck"></i><span>Livraison rapide</span></div>
@@ -110,11 +169,28 @@
   </div>
 </section>
 
-<section class="empty-state" *ngIf="cartService.itemsCount() === 0">
+<section class="empty-state" *ngIf="cartService.itemsCount() === 0 && !lastOrder()">
   <div class="container empty-inner">
     <i class="pi pi-shopping-cart empty-icon"></i>
     <h2>Votre panier est vide</h2>
     <p>Parcourez notre collection et trouvez les lunettes qui vous correspondent.</p>
     <a routerLink="/produits" class="btn btn-primary btn-lg"><i class="pi pi-shopping-bag"></i> Voir la boutique</a>
+  </div>
+</section>
+<section class="section" *ngIf="lastOrder() as order">
+  <div class="container empty-inner">
+    <i class="pi pi-check-circle empty-icon" style="color: var(--brand-green);"></i>
+    <h2>Merci ! Votre commande est enregistrée</h2>
+    <p>
+      Référence : <strong>{{ order.reference }}</strong> — Total :
+      <strong>{{ order.total.toFixed(2) }} $</strong>
+    </p>
+    <p>
+      Paiement à la livraison. Nous vous contacterons au
+      <strong>{{ customerPhone }}</strong> pour confirmer la livraison.
+    </p>
+    <a routerLink="/produits" class="btn btn-primary btn-lg">
+      <i class="pi pi-shopping-bag"></i> Continuer vos achats
+    </a>
   </div>
 </section>

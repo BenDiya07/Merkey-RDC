@@ -26,6 +26,9 @@ export interface CategoryMeta {
   description?: string;
 }
 
+const STORAGE_IMG =
+  'https://bowjrgqjazopkecfdfub.supabase.co/storage/v1/object/public/product-images/products/';
+
 export const CATEGORIES: CategoryMeta[] = [
   {
     value: 'all',
@@ -34,25 +37,25 @@ export const CATEGORIES: CategoryMeta[] = [
   {
     value: 'lumierebleue',
     label: 'Lumière bleue',
-    image: '/merkeywebp/IMG-20230516-WA0050.webp',
+    image: `${STORAGE_IMG}MRK-ALB-001.webp`,
     description: 'Protégez vos yeux devant les écrans.'
   },
   {
     value: 'photogrey',
     label: 'Photogrey',
-    image: '/merkeywebp/MERKEY_24.webp',
+    image: `${STORAGE_IMG}MRK-PHG-001.webp`,
     description: 'Des verres qui s\u2019adaptent à la lumière.'
   },
   {
     value: 'soleil',
     label: 'Lunettes de soleil',
-    image: '/merkeywebp/IMG-20230516-WA0048.webp',
+    image: `${STORAGE_IMG}MRK-SOL-002.webp`,
     description: 'Protection UV et style pour les journées ensoleillées.'
   },
   {
     value: 'accessoires',
     label: 'Accessoires',
-    image: '/images/hero-glasses.png',
+    image: `${STORAGE_IMG}MRK-ACC-001.webp`,
     description: 'Étuis et accessoires pour prendre soin de vos lunettes.'
   }
 ];

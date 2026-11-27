@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SITE, whatsappLink } from '../../core/config/site.config';
 import { CartService } from '../../core/services/cart.service';
+import { OrderConfirmation, OrderService } from '../../core/services/order.service';
 import { ToastService } from '../../core/services/toast.service';
 
 @Component({
@@ -16,11 +17,20 @@ import { ToastService } from '../../core/services/toast.service';
 export class CartComponent {
   readonly cartService = inject(CartService);
   private toastService = inject(ToastService);
+  private orderService = inject(OrderService);
 
   readonly site = SITE;
 
   promoCode = '';
   promoError = signal('');
+
+  customerName = '';
+  customerPhone = '';
+  customerCity = '';
+  note = '';
+  readonly submitting = signal(false);
+  readonly orderError = signal('');
+  readonly lastOrder = signal<OrderConfirmation | null>(null);
 
   get totalUnits(): number {
     const promotions = this.cartService.items().filter((item) => item.product.discount).length;
@@ -50,6 +60,49 @@ export class CartComponent {
 
   removePromo(): void {
     this.cartService.removePromo();
+  }
+
+  placeOrder(): void {
+    if (this.submitting()) return;
+
+    if (this.customerName.trim().length < 2) {
+      this.orderError.set('Veuillez saisir votre nom complet.');
+      return;
+    }
+    if (this.customerPhone.replace(/\D/g, '').length < 7) {
+      this.orderError.set('Veuillez saisir un numéro de téléphone valide.');
+      return;
+    }
+
+    this.orderError.set('');
+    this.submitting.set(true);
+
+    this.orderService
+      .createOrder({
+        customerName: this.customerName.trim(),
+        customerPhone: this.customerPhone.trim(),
+        customerCity: this.customerCity.trim(),
+        note: this.note.trim(),
+        promoCode: this.cartService.promo()?.code ?? null,
+        items: this.cartService.items().map((item) => ({
+          product_id: item.product.id,
+          quantity: item.quantity
+        }))
+      })
+      .subscribe({
+        next: (order) => {
+          this.submitting.set(false);
+          this.lastOrder.set(order);
+          this.cartService.clear();
+          this.toastService.show(`Commande ${order.reference} enregistrée !`, 'pi-check-circle');
+        },
+        error: (error) => {
+          this.submitting.set(false);
+          this.orderError.set(
+            error?.message ?? 'Impossible de passer la commande. Réessayez dans un instant.'
+          );
+        }
+      });
   }
 
   orderViaWhatsApp(): void {
