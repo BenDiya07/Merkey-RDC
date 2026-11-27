@@ -33,17 +33,6 @@
       <a routerLink="/produits/{{ product().id }}">{{ product().name }}</a>
     </h3>
 
-    <div class="product-rating">
-      <span class="stars">
-        <i
-          class="pi pi-star-fill"
-          *ngFor="let s of stars"
-          [class.star-off]="s >= product().rating"
-        ></i>
-      </span>
-      <span class="rating-text">{{ product().rating.toFixed(1) }} ({{ product().reviewsCount }})</span>
-    </div>
-
     <p class="product-description">{{ product().description }}</p>
 
     <div class="product-footer">
@@ -51,7 +40,6 @@
         <span class="price-now">{{ formattedPrice }}</span>
         <span class="price-old" *ngIf="formattedOldPrice">{{ formattedOldPrice }}</span>
       </div>
-      <span class="product-sold">{{ product().sold }} vendus</span>
     </div>
 
     <div class="product-actions">

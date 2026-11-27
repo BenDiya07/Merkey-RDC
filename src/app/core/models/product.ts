@@ -1,9 +1,9 @@
-export type ProductCategory = 'ronde' | 'jft' | 'lumierebleue' | 'photogrey';
+export type ProductCategory = 'lumierebleue' | 'photogrey' | 'soleil' | 'accessoires';
 
-export type ProductSort = 'relevance' | 'price-asc' | 'price-desc' | 'rating' | 'sold';
+export type ProductSort = 'relevance' | 'price-asc' | 'price-desc' | 'newest';
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
   oldPrice?: number;
@@ -14,9 +14,6 @@ export interface Product {
   description: string;
   features: string[];
   category: ProductCategory;
-  rating: number;
-  reviewsCount: number;
-  sold: number;
   stock: number;
   isNew?: boolean;
   featured?: boolean;
@@ -29,34 +26,37 @@ export interface CategoryMeta {
   description?: string;
 }
 
+const STORAGE_IMG =
+  'https://bowjrgqjazopkecfdfub.supabase.co/storage/v1/object/public/product-images/products/';
+
 export const CATEGORIES: CategoryMeta[] = [
   {
     value: 'all',
     label: 'Tous les modèles'
   },
   {
-    value: 'ronde',
-    label: 'Rondes',
-    image: '/merkeywebp/MERKEY_24.webp',
-    description: 'Le charme intemporel des montures rondes.'
-  },
-  {
-    value: 'jft',
-    label: 'JFT',
-    image: '/merkeywebp/IMG-20230516-WA0048.webp',
-    description: 'Élégance et sobriété, le style signature.'
-  },
-  {
     value: 'lumierebleue',
     label: 'Lumière bleue',
-    image: '/merkeywebp/IMG-20230516-WA0050.webp',
+    image: `${STORAGE_IMG}MRK-ALB-001.webp`,
     description: 'Protégez vos yeux devant les écrans.'
   },
   {
     value: 'photogrey',
     label: 'Photogrey',
-    image: '/images/hero-glasses.png',
+    image: `${STORAGE_IMG}MRK-PHG-001.webp`,
     description: 'Des verres qui s\u2019adaptent à la lumière.'
+  },
+  {
+    value: 'soleil',
+    label: 'Lunettes de soleil',
+    image: `${STORAGE_IMG}MRK-SOL-002.webp`,
+    description: 'Protection UV et style pour les journées ensoleillées.'
+  },
+  {
+    value: 'accessoires',
+    label: 'Accessoires',
+    image: `${STORAGE_IMG}MRK-ACC-001.webp`,
+    description: 'Étuis et accessoires pour prendre soin de vos lunettes.'
   }
 ];
 

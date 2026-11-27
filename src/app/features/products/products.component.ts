@@ -15,8 +15,7 @@ import { RevealAnimationDirective } from '../../shared/directives/reveal-animati
 
 const SORTS: { value: ProductSort; label: string }[] = [
   { value: 'relevance', label: 'Pertinence' },
-  { value: 'sold', label: 'Meilleures ventes' },
-  { value: 'rating', label: 'Mieux notés' },
+  { value: 'newest', label: 'Nouveautés' },
   { value: 'price-asc', label: 'Prix croissant' },
   { value: 'price-desc', label: 'Prix décroissant' }
 ];
@@ -40,6 +39,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   searchTerm = signal('');
   sort = signal<ProductSort>('relevance');
   products = signal<Product[]>([]);
+  loading = signal(true);
+  loadError = signal(false);
 
   private destroy$ = new Subject<void>();
 
@@ -47,17 +48,28 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(() => this.productService.search({
-          search: (this.route.snapshot.queryParams['q'] as string) ?? '',
-          category: (this.route.snapshot.queryParams['cat'] as ProductCategory) ?? 'all',
-          sort: this.sort()
-        }))
+        switchMap(() => {
+          this.loading.set(true);
+          this.loadError.set(false);
+          return this.productService.search({
+            search: (this.route.snapshot.queryParams['q'] as string) ?? '',
+            category: (this.route.snapshot.queryParams['cat'] as ProductCategory) ?? 'all',
+            sort: this.sort()
+          });
+        })
       )
-      .subscribe((result) => {
-        this.searchTerm.set((this.route.snapshot.queryParams['q'] as string) ?? '');
-        const cat = this.route.snapshot.queryParams['cat'] as ProductCategory | undefined;
-        this.selectedCategory.set(cat ?? 'all');
-        this.products.set(result);
+      .subscribe({
+        next: (result) => {
+          this.searchTerm.set((this.route.snapshot.queryParams['q'] as string) ?? '');
+          const cat = this.route.snapshot.queryParams['cat'] as ProductCategory | undefined;
+          this.selectedCategory.set(cat ?? 'all');
+          this.products.set(result);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+          this.loadError.set(true);
+        }
       });
   }
 
@@ -82,13 +94,24 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   private reload(): void {
+    this.loading.set(true);
+    this.loadError.set(false);
     this.productService
       .search({
         search: this.searchTerm(),
         category: this.selectedCategory(),
         sort: this.sort()
       })
-      .subscribe((result) => this.products.set(result));
+      .subscribe({
+        next: (result) => {
+          this.products.set(result);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loading.set(false);
+          this.loadError.set(true);
+        }
+      });
   }
 
   private cleanQuery(query: Record<string, unknown>): Record<string, string> {

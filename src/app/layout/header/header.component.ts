@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { SITE } from '../../core/config/site.config';
 import { CartService } from '../../core/services/cart.service';
 import { WishlistService } from '../../core/services/wishlist.service';
 
@@ -28,6 +29,7 @@ export class HeaderComponent {
   private router = inject(Router);
   readonly cartService = inject(CartService);
   readonly wishlistService = inject(WishlistService);
+  readonly site = SITE;
 
   navLinks: NavLink[] = [
     { label: 'Accueil', path: '/', exact: true },
@@ -36,10 +38,10 @@ export class HeaderComponent {
     { label: 'Contact', path: '/contact' }
   ];
 
-  categories = [{ label: 'Rondes', path: '/produits', category: 'ronde' },
-    { label: 'JFT', path: '/produits', category: 'jft' },
-    { label: 'Lumière bleue', path: '/produits', category: 'lumierebleue' },
-    { label: 'Photogrey', path: '/produits', category: 'photogrey' }];
+  categories = [{ label: 'Lumière bleue', path: '/produits', category: 'lumierebleue' },
+    { label: 'Photogrey', path: '/produits', category: 'photogrey' },
+    { label: 'Lunettes de soleil', path: '/produits', category: 'soleil' },
+    { label: 'Accessoires', path: '/produits', category: 'accessoires' }];
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
